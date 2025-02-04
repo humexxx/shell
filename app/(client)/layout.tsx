@@ -3,13 +3,17 @@
 import { Header } from "@/components/layout";
 import { MAIN_HEADER_HEIGHT } from "@/components/layout/Header";
 import Sidebar, { SIDEBAR_WIDTH } from "@/components/layout/Sidebar";
-import { VERSION } from "@/lib/consts";
-import { Box, Container, Drawer } from "@mui/material";
+import { APP_TITLE, VERSION } from "@/lib/consts";
+import EThemes from "@/lib/theme/EThemes";
+import ThemeProvider from "@/lib/theme/ThemeProvider";
+import { useThemeContext } from "@/lib/theme/useThemeContext";
+import { Box, CssBaseline, Drawer } from "@mui/material";
 import { ReactNode, useState } from "react";
 
 function ClientLayout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const themeContext = useThemeContext();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -27,7 +31,15 @@ function ClientLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        bgcolor:
+          themeContext.theme === EThemes.Light
+            ? "#fafafa"
+            : "background.default",
+      }}
+    >
       <Header handleDrawerToggle={handleDrawerToggle} />
       <Box
         component="nav"
@@ -47,10 +59,11 @@ function ClientLayout({ children }: { children: ReactNode }) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: SIDEBAR_WIDTH,
+              bgcolor: "transparent",
             },
           }}
         >
-          <Sidebar title="SHELL" version={VERSION} />
+          <Sidebar title={APP_TITLE} version={VERSION} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -59,29 +72,36 @@ function ClientLayout({ children }: { children: ReactNode }) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: SIDEBAR_WIDTH,
+              bgcolor: "transparent",
             },
           }}
           open
         >
-          <Sidebar title="SHELL" version={VERSION} />
+          <Sidebar title={APP_TITLE} version={VERSION} />
         </Drawer>
       </Box>
       <Box
-        component="main"
+        component={"main"}
         sx={{
           flexGrow: 1,
           width: { lg: `calc(100% - ${SIDEBAR_WIDTH}px)` },
-          backgroundColor: "background.default",
           minHeight: `calc(100vh - ${MAIN_HEADER_HEIGHT}px)`,
           marginTop: `${MAIN_HEADER_HEIGHT}px`,
         }}
       >
-        <Container maxWidth="xl" sx={{ mt: 4 }}>
-          {children}
-        </Container>
+        {children}
       </Box>
     </Box>
   );
 }
 
-export default ClientLayout;
+const ClientLayoutWrapper = ({ children }: { children: ReactNode }) => {
+  return (
+    <ThemeProvider>
+      <CssBaseline />
+      <ClientLayout>{children}</ClientLayout>
+    </ThemeProvider>
+  );
+};
+
+export default ClientLayoutWrapper;

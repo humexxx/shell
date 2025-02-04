@@ -3,8 +3,9 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { SIDEBAR_WIDTH } from "./Sidebar";
+import { useThemeContext } from "@/lib/theme/useThemeContext";
+import EThemes from "@/lib/theme/EThemes";
 
 export const MAIN_HEADER_HEIGHT = 56;
 
@@ -13,12 +14,7 @@ interface Props {
 }
 
 const Header = ({ handleDrawerToggle }: Props) => {
-  const theme = useTheme();
-  //   const themeContext = useThemeContext();
-
-  const themeContext = {
-    toggleColorMode: () => {},
-  };
+  const themeContext = useThemeContext();
 
   function handleLogout() {
     throw new Error("Function not implemented.");
@@ -27,7 +23,7 @@ const Header = ({ handleDrawerToggle }: Props) => {
   return (
     <AppBar
       position="fixed"
-      color="default"
+      color="transparent"
       elevation={0}
       sx={{
         height: MAIN_HEADER_HEIGHT,
@@ -35,9 +31,6 @@ const Header = ({ handleDrawerToggle }: Props) => {
         ml: { lg: `${SIDEBAR_WIDTH}px` },
         display: "flex",
         justifyContent: "space-between",
-        bgcolor: "background.paper",
-        borderBottom: 1,
-        borderBottomColor: "divider",
         // bgcolor: "hsla(0, 0%, 100%, 0.6)",
         // backdropFilter: "blur(50px)",
       }}
@@ -45,7 +38,6 @@ const Header = ({ handleDrawerToggle }: Props) => {
       <Toolbar
         sx={{
           minHeight: `${MAIN_HEADER_HEIGHT}px !important`,
-          height: MAIN_HEADER_HEIGHT,
         }}
       >
         <IconButton
@@ -64,7 +56,7 @@ const Header = ({ handleDrawerToggle }: Props) => {
           onClick={themeContext.toggleColorMode}
           color="inherit"
         >
-          {theme.palette.mode === "dark" ? (
+          {themeContext.theme === EThemes.Dark ? (
             <Brightness4Icon />
           ) : (
             <Brightness7Icon />

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -13,6 +13,7 @@ import {
   Box,
   Toolbar,
   Typography,
+  Stack,
 } from "@mui/material";
 import Link from "next/link";
 import { AdminRender } from "../auth";
@@ -54,54 +55,24 @@ export const SIDEBAR_WIDTH = 240;
 
 const Sidebar = ({ title, version }: { title: string; version: string }) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Box display={"flex"} flexDirection={"column"} height={"100%"}>
       <Toolbar
         sx={{
           minHeight: `${MAIN_HEADER_HEIGHT}px !important`,
-          height: MAIN_HEADER_HEIGHT,
         }}
       >
-        <Typography variant="h6" component="div" sx={{ position: "relative" }}>
-          {title}{" "}
-          <Typography
-            mb={2}
-            variant="caption"
-            sx={{ position: "absolute", top: 2, ml: 1 }}
-          >
-            ({version})
+        <Stack direction="row" spacing={1} alignItems={"center"} px={1}>
+          <Typography variant="h6" component="div">
+            {title}{" "}
           </Typography>
-        </Typography>
+          <Typography variant="caption">({version})</Typography>
+        </Stack>
       </Toolbar>
       <Divider />
 
-      <List dense>
-        {mainRoutes.map(({ text, icon, href }) => (
-          <ListItem key={text}>
-            <ListItemButton
-              sx={{ borderRadius: 2 }}
-              selected={location.pathname.includes(href)}
-              component={Link}
-              href={href}
-            >
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-
-      {sections.map(({ title, routes }, i) => (
-        <List
-          key={title}
-          dense
-          sx={{ flexGrow: i === sections.length - 1 ? 1 : 0 }}
-        >
-          <ListItem>
-            <Typography variant="caption" ml={2}>
-              {title}
-            </Typography>
-          </ListItem>
-          {routes.map(({ text, icon, href }) => (
+      <Box px={1} flexGrow={1} display={"flex"} flexDirection={"column"}>
+        <List dense>
+          {mainRoutes.map(({ text, icon, href }) => (
             <ListItem key={text}>
               <ListItemButton
                 sx={{ borderRadius: 2 }}
@@ -115,38 +86,64 @@ const Sidebar = ({ title, version }: { title: string; version: string }) => {
             </ListItem>
           ))}
         </List>
-      ))}
-      
-      <List dense>
-        <AdminRender>
+
+        {sections.map(({ title, routes }, i) => (
+          <Fragment key={title}>
+            <List dense sx={{ flexGrow: i === sections.length - 1 ? 1 : 0 }}>
+              <ListItem>
+                <Typography variant="caption" ml={2}>
+                  {title}
+                </Typography>
+              </ListItem>
+              {routes.map(({ text, icon, href }) => (
+                <ListItem key={text}>
+                  <ListItemButton
+                    sx={{ borderRadius: 2 }}
+                    selected={location.pathname.includes(href)}
+                    component={Link}
+                    href={href}
+                  >
+                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+          </Fragment>
+        ))}
+
+        <List dense>
+          <AdminRender>
+            <ListItem>
+              <ListItemButton
+                sx={{ borderRadius: 2 }}
+                selected={location.pathname.includes("/admin")}
+                component={Link}
+                href="/admin"
+              >
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin" />
+              </ListItemButton>
+            </ListItem>
+          </AdminRender>
           <ListItem>
             <ListItemButton
               sx={{ borderRadius: 2 }}
-              selected={location.pathname.includes("/admin")}
+              selected={location.pathname.includes("/settings")}
               component={Link}
-              href="/admin"
+              href="/settings"
             >
               <ListItemIcon>
-                <AdminPanelSettingsIcon />
+                <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Admin" />
+              <ListItemText primary="Settings" />
             </ListItemButton>
           </ListItem>
-        </AdminRender>
-        <ListItem>
-          <ListItemButton
-            sx={{ borderRadius: 2 }}
-            selected={location.pathname.includes("/settings")}
-            component={Link}
-            href="/settings"
-          >
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+        </List>
+      </Box>
     </Box>
   );
 };
