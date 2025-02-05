@@ -1,11 +1,11 @@
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
 import { SIDEBAR_WIDTH } from "./Sidebar";
 import { useThemeContext } from "@/lib/theme/useThemeContext";
 import EThemes from "@/lib/theme/EThemes";
+import { UserButton } from "@clerk/nextjs";
 
 export const MAIN_HEADER_HEIGHT = 56;
 
@@ -15,10 +15,6 @@ interface Props {
 
 const Header = ({ handleDrawerToggle }: Props) => {
   const themeContext = useThemeContext();
-
-  function handleLogout() {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <AppBar
@@ -62,14 +58,9 @@ const Header = ({ handleDrawerToggle }: Props) => {
             <Brightness7Icon />
           )}
         </IconButton>
-        <IconButton
-          color="inherit"
-          edge="end"
-          onClick={handleLogout}
-          sx={{ ml: 2 }}
-        >
-          <LogoutIcon />
-        </IconButton>
+        <Box ml={2} display={'flex'} alignItems={'center'}>
+          <UserButton />
+        </Box>
       </Toolbar>
     </AppBar>
   );
