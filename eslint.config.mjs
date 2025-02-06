@@ -1,5 +1,6 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
 import { FlatCompat } from "@eslint/eslintrc";
 import importPlugin from "eslint-plugin-import";
 
@@ -15,6 +16,7 @@ const eslintConfig = [
   {
     plugins: { import: importPlugin },
     rules: {
+      "@typescript-eslint/no-unused-vars": "warn",
       "import/order": [
         "warn",
         {
