@@ -1,11 +1,13 @@
+import { UserButton } from "@clerk/nextjs";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
-import { SIDEBAR_WIDTH } from "./Sidebar";
-import { useThemeContext } from "@/lib/theme/useThemeContext";
+
 import EThemes from "@/lib/theme/EThemes";
-import { UserButton } from "@clerk/nextjs";
+import { useThemeContext } from "@/lib/theme/useThemeContext";
+
+import { SIDEBAR_WIDTH } from "./Sidebar";
 
 export const MAIN_HEADER_HEIGHT = 56;
 

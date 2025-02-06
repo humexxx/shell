@@ -1,5 +1,8 @@
 "use client";
 
+import { Box, CssBaseline, Drawer } from "@mui/material";
+import { ReactNode, useState } from "react";
+
 import { Header } from "@/components/layout";
 import { MAIN_HEADER_HEIGHT } from "@/components/layout/Header";
 import Sidebar, { SIDEBAR_WIDTH } from "@/components/layout/Sidebar";
@@ -7,8 +10,6 @@ import { APP_TITLE, VERSION } from "@/lib/consts";
 import EThemes from "@/lib/theme/EThemes";
 import ThemeProvider from "@/lib/theme/ThemeProvider";
 import { useThemeContext } from "@/lib/theme/useThemeContext";
-import { Box, CssBaseline, Drawer } from "@mui/material";
-import { ReactNode, useState } from "react";
 
 function ClientLayout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);

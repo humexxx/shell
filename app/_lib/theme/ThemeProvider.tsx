@@ -1,12 +1,13 @@
-import { createContext, PropsWithChildren, useMemo } from "react";
 
 import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material";
+import { createContext, PropsWithChildren, useMemo } from "react";
 
-import EThemes from "./EThemes";
-import { useLocalStorage } from "../hooks";
 import { LOCAL_STORAGE_KEYS } from "../consts";
+import { useLocalStorage } from "../hooks";
+
 import { getDesignTokens } from "./customThemes";
 import EClientVipStatus from "./EClientVipStatus";
+import EThemes from "./EThemes";
 
 interface ThemeContextType {
   toggleColorMode: () => void;

@@ -1,7 +1,9 @@
-import { APP_TITLE } from "@/lib/consts";
 import { Box, Container, Typography } from "@mui/material";
 import { Metadata } from "next";
 import React from "react";
+
+import { APP_TITLE } from "@/lib/consts";
+
 
 export const metadata: Metadata = {
   title: `Dashboard - ${APP_TITLE}`,
