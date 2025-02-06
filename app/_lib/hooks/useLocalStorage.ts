@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === "undefined") return initialValue;
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -23,6 +24,8 @@ function useLocalStorage<T>(key: string, initialValue: T) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleStorageChange = () => {
       try {
         const item = window.localStorage.getItem(key);
@@ -34,10 +37,10 @@ function useLocalStorage<T>(key: string, initialValue: T) {
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, [key]);
 

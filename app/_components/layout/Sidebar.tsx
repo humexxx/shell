@@ -15,6 +15,7 @@ import {
   Stack,
 } from "@mui/material";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Fragment, ReactNode } from "react";
 
 import { AdminRender } from "../auth";
@@ -56,6 +57,9 @@ const sections: ISectionRoutes[] = [secondarySection];
 export const SIDEBAR_WIDTH = 240;
 
 const Sidebar = ({ title, version }: { title: string; version: string }) => {
+
+  const pathname = usePathname();
+  
   return (
     <Box display={"flex"} flexDirection={"column"} height={"100%"}>
       <Toolbar
@@ -78,7 +82,7 @@ const Sidebar = ({ title, version }: { title: string; version: string }) => {
             <ListItem key={text}>
               <ListItemButton
                 sx={{ borderRadius: 2 }}
-                selected={location.pathname.includes(href)}
+                selected={pathname.includes(href)}
                 component={Link}
                 href={href}
               >
@@ -101,7 +105,7 @@ const Sidebar = ({ title, version }: { title: string; version: string }) => {
                 <ListItem key={text}>
                   <ListItemButton
                     sx={{ borderRadius: 2 }}
-                    selected={location.pathname.includes(href)}
+                    selected={pathname.includes(href)}
                     component={Link}
                     href={href}
                   >
@@ -120,7 +124,7 @@ const Sidebar = ({ title, version }: { title: string; version: string }) => {
             <ListItem>
               <ListItemButton
                 sx={{ borderRadius: 2 }}
-                selected={location.pathname.includes("/admin")}
+                selected={pathname.includes("/admin")}
                 component={Link}
                 href="/admin"
               >
@@ -134,7 +138,7 @@ const Sidebar = ({ title, version }: { title: string; version: string }) => {
           <ListItem>
             <ListItemButton
               sx={{ borderRadius: 2 }}
-              selected={location.pathname.includes("/settings")}
+              selected={pathname.includes("/settings")}
               component={Link}
               href="/settings"
             >
