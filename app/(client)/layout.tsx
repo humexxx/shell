@@ -60,7 +60,6 @@ function ClientLayout({ children }: { children: ReactNode }) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: SIDEBAR_WIDTH,
-              bgcolor: "transparent",
             },
           }}
         >
